@@ -1,5 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django_tenants.models import TenantMixin, DomainMixin
+
+
+class Client(TenantMixin):
+    name = models.CharField(max_length=100)
+    paid_until = models.CharField(max_length=100)
+    on_trial = models.BooleanField()
+    created_on = models.DateField(auto_now_add=True)
+
+    # specify the database schema to use for this tenant
+    auto_create_schema = True
+
+class MyDomain(DomainMixin):
+    pass
 
 class Cliente(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
